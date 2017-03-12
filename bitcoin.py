@@ -72,13 +72,20 @@ class QueryLoop():
         self.loop()
 
 
-if __name__ == "__main__":
-    menu = gtk.Menu()
-    item = gtk.MenuItem("item")
+def quit(self):
+    """Quits the application. Usually called when the user chooses the menu item option."""
+    gtk.main_quit()
 
+if __name__ == "__main__":
+    item = gtk.MenuItem("Quit")
+    item.connect("activate", quit)
+    item.show()
+
+    menu = gtk.Menu()
     menu.append(item)
 
-    indicator = appindicator.Indicator.new("Bitcoin Indicator", os.path.abspath("bitcoin.png"),
+    indicator = appindicator.Indicator.new("Bitcoin Indicator",
+                                           os.path.abspath("bitcoin.png"),
                                            appindicator.IndicatorCategory.SYSTEM_SERVICES)
     indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
     indicator.set_menu(menu)
