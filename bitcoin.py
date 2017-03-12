@@ -82,6 +82,7 @@ class QueryLoop():
 
         if result is not None:
             self.indicator.set_label("{} EUR".format(result["last"]), '')
+            self.last_known = result
         else:
             self.indicator.set_label("Last Known: {} EUR (Error)".format(self.last_known["last"]), '')
 
