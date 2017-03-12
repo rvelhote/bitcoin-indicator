@@ -5,5 +5,7 @@ python:
 before_install:
     - sudo apt-get -qq update
     - sudo apt-get install -y python3-gi
+virtualenv:
+    - system_site_packages: true
 install: "pip install -r requirements.txt"
 script: python -m unittest bitcoin_test
