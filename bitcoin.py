@@ -38,7 +38,9 @@ EURO = "eur"
 class Bitstamp():
     """Bitstamp implements the Bitstamp v2 API"""
     url = {
-        "btceur": "https://www.bitstamp.net/api/v2/ticker/btceur"
+        "btceur": "https://www.bitstamp.net/api/v2/ticker/btceur",
+        "btcinv": "https://invalid-address.bitstamp.net/api/v2/ticker/btceur",
+        "btc404": "https://www.bitstamp.net/api/v2/ticker/btceur-404"
     }
 
     def __init__(self, currency):
@@ -47,8 +49,19 @@ class Bitstamp():
 
     def query(self):
         """Perform a query to the API defined by the Exchange. The result will be a JSON object with all the data."""
-        response = requests.request("GET", self.url["btc" + self.currency])
-        return response.json()
+        result = None
+
+        try:
+            response = requests.request("GET", self.url["btc" + self.currency])
+
+            if response.status_code != 200:
+                raise Exception("Request failed with a {} status code".format(response.status_code))
+
+            result = response.json()
+        except Exception as e:
+            print(str(e))
+
+        return result
 
 
 class QueryLoop():
@@ -63,7 +76,12 @@ class QueryLoop():
         """Loop calls it-self forever and ever and will consult the exchange for the most current value and update
         the indicator's label content."""
         result = self.exchange.query()
-        indicator.set_label("{} EUR".format(result["last"]), '')
+
+        if result is not None:
+            indicator.set_label("{} EUR".format(result["last"]), '')
+        else:
+            indicator.set_label("Last Known: {} EUR (Error)".format(result["last"]), '')
+
         glib.timeout_add_seconds(5, self.loop)
 
     def start(self):
