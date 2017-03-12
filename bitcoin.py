@@ -91,9 +91,7 @@ if __name__ == "__main__":
     indicator.set_menu(menu)
 
     exchange = Bitstamp(EURO)
-
-    loop = QueryLoop(indicator, exchange)
-    loop.start()
+    QueryLoop(indicator, exchange).start()
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     gtk.main()
