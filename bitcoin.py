@@ -68,9 +68,12 @@ class QueryLoop():
     """QueryLoop accepts the indicator to which the result will be written and an exchange to obtain the results from.
     To define an exchange you only need to implement the query method and return the results in a pre-determined
     format so that it will be consistent."""
+
     def __init__(self, indicator, exchange):
+        """Initialize the query loop with the indicator and the exchange to get the data from."""
         self.indicator = indicator
         self.exchange = exchange
+        self.last_known = {"last": "0.00"}
 
     def loop(self):
         """Loop calls it-self forever and ever and will consult the exchange for the most current value and update
@@ -80,7 +83,7 @@ class QueryLoop():
         if result is not None:
             indicator.set_label("{} EUR".format(result["last"]), '')
         else:
-            indicator.set_label("Last Known: {} EUR (Error)".format(result["last"]), '')
+            indicator.set_label("Last Known: {} EUR (Error)".format(self.last_known["last"]), '')
 
         glib.timeout_add_seconds(5, self.loop)
 
@@ -93,6 +96,7 @@ class QueryLoop():
 def quit(self):
     """Quits the application. Usually called when the user chooses the menu item option."""
     gtk.main_quit()
+
 
 if __name__ == "__main__":
     item = gtk.MenuItem("Quit")
