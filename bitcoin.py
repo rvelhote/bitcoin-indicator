@@ -39,10 +39,11 @@ class Bitstamp():
     }
 
     def __init__(self, currency):
-        self.currency = currency
+        """Initialize the exchange with the currency that we want to use"""
+        self.currency = currency.strip().lower()
 
     def query(self):
-        response = requests.request("GET", self.url[self.currency])
+        response = requests.request("GET", self.url["btc" + self.currency])
         return response.json()
 
 
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
     indicator.set_menu(menu)
 
-    exchange = Bitstamp("btceur")
+    exchange = Bitstamp("eur")
 
     loop = QueryLoop(indicator, exchange)
     loop.start()
