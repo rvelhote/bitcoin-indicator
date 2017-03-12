@@ -1,8 +1,9 @@
-dist: trusty
-sudo: required
 language: python
 python:
-  - "3.5_with_system_site_packages"
-  - "3.6_with_system_site_packages"
+    - "3.5"
+    - "3.6"
+before_install:
+    - sudo apt-get -qq update
+    - sudo apt-get install -y python3-gi
 install: "pip install -r requirements.txt"
 script: python -m unittest bitcoin_test
