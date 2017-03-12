@@ -31,6 +31,9 @@ from gi.repository import Gtk as gtk
 from gi.repository import AppIndicator3 as appindicator
 from gi.repository import GLib as glib
 
+"""Constant that defines the name of the EURO currency"""
+EURO = "eur"
+
 
 class Bitstamp():
     """Bitstamp implements the Bitstamp v2 API"""
@@ -43,21 +46,29 @@ class Bitstamp():
         self.currency = currency.strip().lower()
 
     def query(self):
+        """Perform a query to the API defined by the Exchange. The result will be a JSON object with all the data."""
         response = requests.request("GET", self.url["btc" + self.currency])
         return response.json()
 
 
 class QueryLoop():
+    """QueryLoop accepts the indicator to which the result will be written and an exchange to obtain the results from.
+    To define an exchange you only need to implement the query method and return the results in a pre-determined
+    format so that it will be consistent."""
     def __init__(self, indicator, exchange):
         self.indicator = indicator
         self.exchange = exchange
 
     def loop(self):
+        """Loop calls it-self forever and ever and will consult the exchange for the most current value and update
+        the indicator's label content."""
         result = self.exchange.query()
         indicator.set_label("{} EUR".format(result["last"]), '')
         glib.timeout_add_seconds(5, self.loop)
 
     def start(self):
+        """Starts the query loop it does not do anything else. It's merely a matter of naming because
+        when initializing the loop in the main() point of entry."""
         self.loop()
 
 
@@ -72,7 +83,7 @@ if __name__ == "__main__":
     indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
     indicator.set_menu(menu)
 
-    exchange = Bitstamp("eur")
+    exchange = Bitstamp(EURO)
 
     loop = QueryLoop(indicator, exchange)
     loop.start()
