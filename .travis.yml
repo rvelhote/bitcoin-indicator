@@ -1,6 +1,6 @@
 language: python
 python:
-  - "3.5"
-  - "3.6"
+  - "3.5_with_system_site_packages"
+  - "3.6_with_system_site_packages"
 install: "pip install -r requirements.txt"
 script: python -m unittest bitcoin_test

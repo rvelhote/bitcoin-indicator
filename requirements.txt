@@ -1,2 +1,1 @@
-gi
 codeclimate-test-reporter
