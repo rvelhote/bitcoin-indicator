@@ -19,8 +19,27 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import gi
+import os
 import unittest
+
+gi.require_version('AppIndicator3', '0.1')
+
 from bitcoin import Bitstamp
+from bitcoin import QueryLoop
+
+from gi.repository import AppIndicator3 as appindicator
+
+
+def make_indicator(self):
+    """Reusable indicator instance for testing purposes"""
+    name = "Bitcoin Indicator"
+    icon_path = os.path.abspath("bitcoin.png")
+
+    indicator = appindicator.Indicator.new(name, icon_path, appindicator.IndicatorCategory.SYSTEM_SERVICES)
+    indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
+
+    return indicator
 
 
 class BitstampTest(unittest.TestCase):
@@ -43,3 +62,22 @@ class BitstampTest(unittest.TestCase):
         exchange = Bitstamp("404")
         result = exchange.query()
         self.assertIsNone(result)
+
+
+class QueryLoopTest(unittest.TestCase):
+    def test_valid_request(self):
+        """Make sure that the indicator label is presenting the correct message to the user when all is good"""
+        indicator = make_indicator(self)
+        exchange = Bitstamp("eur")
+
+        QueryLoop(indicator, exchange).start()
+
+        self.assertNotIn("Error", indicator.get_label())
+
+    def test_invalid_request(self):
+        """Make sure that the indicator displays an error message when there is an error"""
+        indicator = make_indicator(self)
+        exchange = Bitstamp("inv")
+
+        QueryLoop(indicator, exchange).start()
+        self.assertIn("Error", indicator.get_label())
