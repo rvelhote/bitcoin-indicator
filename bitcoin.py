@@ -23,6 +23,7 @@ import gi
 import os
 import signal
 import requests
+import logging
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
@@ -30,6 +31,8 @@ gi.require_version('AppIndicator3', '0.1')
 from gi.repository import Gtk as gtk
 from gi.repository import AppIndicator3 as appindicator
 from gi.repository import GLib as glib
+
+logging.basicConfig(level=logging.WARNING)
 
 """Constant that defines the name of the EURO currency"""
 EURO = "eur"
@@ -59,8 +62,9 @@ class Bitstamp():
 
             result = response.json()
         except Exception as e:
-            print(str(e))
+            logging.warning(e)
 
+        logging.debug(result)
         return result
 
 
