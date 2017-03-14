@@ -22,7 +22,7 @@
 import gi
 import os
 import signal
-import requests
+import exchange
 import logging
 
 gi.require_version('Gtk', '3.0')
@@ -38,34 +38,7 @@ logging.basicConfig(level=logging.WARNING)
 EURO = "eur"
 
 
-class Bitstamp():
-    """Bitstamp implements the Bitstamp v2 API"""
-    url = {
-        "btceur": "https://www.bitstamp.net/api/v2/ticker/btceur",
-        "btcinv": "https://invalid-address.bitstamp.net/api/v2/ticker/btceur",
-        "btc404": "https://www.bitstamp.net/api/v2/ticker/btceur-404"
-    }
 
-    def __init__(self, currency):
-        """Initialize the exchange with the currency that we want to use"""
-        self.currency = currency.strip().lower()
-
-    def query(self):
-        """Perform a query to the API defined by the Exchange. The result will be a JSON object with all the data."""
-        result = None
-
-        try:
-            response = requests.request("GET", self.url["btc" + self.currency])
-
-            if response.status_code != 200:
-                raise Exception("Request failed with a {} status code".format(response.status_code))
-
-            result = response.json()
-        except Exception as e:
-            logging.warning(e)
-
-        logging.debug(result)
-        return result
 
 
 class QueryLoop():
@@ -117,7 +90,7 @@ if __name__ == "__main__":
     indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
     indicator.set_menu(menu)
 
-    exchange = Bitstamp(EURO)
+    exchange = exchange.Bitstamp(EURO)
     QueryLoop(indicator, exchange).start()
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
