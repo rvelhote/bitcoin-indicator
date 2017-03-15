@@ -20,20 +20,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import gi
-import signal
-import exchange
-import interface
+import logging
 
 gi.require_version('Gtk', '3.0')
+logging.basicConfig(level=logging.WARNING)
 
 from gi.repository import Gtk as gtk
 
-if __name__ == "__main__":
-    menu = interface.Menu([interface.MenuItemQuit("Quit")])
-    indicator = interface.Indicator("Bitcoin Indicator", "bitcoin.png", menu)
 
-    exchange = exchange.Bitstamp("eur")
-    interface.QueryLoop(indicator.get_instance(), exchange).start()
+class Menu(gtk.Menu):
+    def __init__(self, menu_items):
+        super().__init__()
 
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
-    gtk.main()
+        if len(menu_items) == 0:
+            logging.warning("Watch out! You have not specified any menu items!")
+
+        for item in menu_items:
+            self.append(item)

@@ -20,20 +20,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import gi
-import signal
-import exchange
-import interface
+import logging
 
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk as gtk
 
-if __name__ == "__main__":
-    menu = interface.Menu([interface.MenuItemQuit("Quit")])
-    indicator = interface.Indicator("Bitcoin Indicator", "bitcoin.png", menu)
 
-    exchange = exchange.Bitstamp("eur")
-    interface.QueryLoop(indicator.get_instance(), exchange).start()
+class MenuItemQuit(gtk.MenuItem):
+    def __init__(self, name, visible=True):
+        gtk.MenuItem.__init__(self, name)
 
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
-    gtk.main()
+        self.connect("activate", self.quit)
+
+        if visible:
+            self.show()
+
+    @staticmethod
+    def quit(item):
+        """Quits the application. Usually called when the user chooses the menu item option."""
+        logging.debug("Executing action for " + item.get_label())
+        gtk.main_quit()

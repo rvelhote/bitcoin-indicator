@@ -20,20 +20,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import gi
-import signal
-import exchange
-import interface
+import os
 
-gi.require_version('Gtk', '3.0')
+gi.require_version('AppIndicator3', '0.1')
 
-from gi.repository import Gtk as gtk
+from gi.repository import AppIndicator3 as appindicator
 
-if __name__ == "__main__":
-    menu = interface.Menu([interface.MenuItemQuit("Quit")])
-    indicator = interface.Indicator("Bitcoin Indicator", "bitcoin.png", menu)
 
-    exchange = exchange.Bitstamp("eur")
-    interface.QueryLoop(indicator.get_instance(), exchange).start()
+class Indicator():
+    def __init__(self, name, icon_path, menu):
+        self.name = name
+        self.icon = os.path.abspath(icon_path)
+        self.category = appindicator.IndicatorCategory.SYSTEM_SERVICES
 
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
-    gtk.main()
+        # TODO Extend the Indicator class?
+        self.indicator = appindicator.Indicator.new(self.name, self.icon, self.category)
+        self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
+        self.indicator.set_menu(menu)
+
+    def get_instance(self):
+        return self.indicator

@@ -19,21 +19,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import gi
-import signal
-import exchange
-import interface
-
-gi.require_version('Gtk', '3.0')
-
-from gi.repository import Gtk as gtk
-
-if __name__ == "__main__":
-    menu = interface.Menu([interface.MenuItemQuit("Quit")])
-    indicator = interface.Indicator("Bitcoin Indicator", "bitcoin.png", menu)
-
-    exchange = exchange.Bitstamp("eur")
-    interface.QueryLoop(indicator.get_instance(), exchange).start()
-
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
-    gtk.main()
+from interface.indicator import Indicator
+from interface.menu import Menu
+from interface.menu_item import MenuItemQuit
+from interface.query_loop import QueryLoop
