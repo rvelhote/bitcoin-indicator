@@ -38,5 +38,5 @@ class Indicator():
         self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
         self.indicator.set_menu(menu)
 
-    def get_instance(self):
-        return self.indicator
+    def set_label(self, value):
+        self.indicator.set_label(value, '')

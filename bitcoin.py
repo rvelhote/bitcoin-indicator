@@ -33,7 +33,7 @@ if __name__ == "__main__":
     indicator = interface.Indicator("Bitcoin Indicator", "bitcoin.png", menu)
 
     exchange = exchange.Bitstamp("eur")
-    interface.QueryLoop(indicator.get_instance(), exchange).start()
+    interface.QueryLoop(indicator, exchange).start()
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     gtk.main()

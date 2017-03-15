@@ -45,10 +45,10 @@ class QueryLoop():
         result = self.exchange.query()
 
         if result is not None:
-            self.indicator.set_label("{} EUR".format(result["last"]), '')
+            self.indicator.set_label("{} EUR".format(result["last"]))
             self.last_known = result
         else:
-            self.indicator.set_label("Last Known: {} EUR (Error)".format(self.last_known["last"]), '')
+            self.indicator.set_label("Last Known: {} EUR (Error)".format(self.last_known["last"]))
 
         glib.timeout_add_seconds(5, self.loop)
 
