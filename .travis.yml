@@ -1,11 +1,5 @@
-dist: trusty
-sudo: required
 language: python
 python:
     - "3.5"
     - "3.6"
-before_install:
-    - sudo apt-get -qq update
-    - sudo apt-get install -y gir1.2-gtk-3.0 gir1.2-appindicator3-0.1 gir1.2-notify-0.7 python3-gi
-install: pip3 install -r requirements.txt
-script: python3 -m unittest bitcoin_test
+script: python -m unittest exchange/bitstamp_test.py
