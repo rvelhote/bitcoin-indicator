@@ -29,6 +29,13 @@ from gi.repository import AppIndicator3 as appindicator
 
 class Indicator():
     def __init__(self, name, icon_path, menu):
+        """
+        Creates a new indicator for the application! The best indicator Jerry. The best.
+
+        :param name: The name to give the indicator
+        :param icon_path: A path for the icon that will identify the indicator
+        :param menu: An instance of interface.Menu with the list of menu items that belong to this indicator
+        """
         self.name = name
         self.icon = os.path.abspath(icon_path)
         self.category = appindicator.IndicatorCategory.SYSTEM_SERVICES
@@ -39,4 +46,10 @@ class Indicator():
         self.indicator.set_menu(menu)
 
     def set_label(self, value):
+        """
+        Defines a label for the indicator. This is merely a wrapper for the indicator set_label method.
+
+        :param value: A string containing a new label for the indicator
+        :return: None
+        """
         self.indicator.set_label(value, '')

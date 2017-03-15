@@ -32,9 +32,13 @@ class QueryLoop():
     """QueryLoop accepts the indicator to which the result will be written and an exchange to obtain the results from.
     To define an exchange you only need to implement the query method and return the results in a pre-determined
     format so that it will be consistent."""
-
     def __init__(self, indicator, exchange):
-        """Initialize the query loop with the indicator and the exchange to get the data from."""
+        """
+        Initialize the query loop with the indicator and the exchange to get the data from.
+
+        :param indicator: An instance of an indicator
+        :param exchange: An instance of an exchange to get the information from
+        """
         self.indicator = indicator
         self.exchange = exchange
         self.last_known = {"last": "0.00"}

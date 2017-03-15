@@ -28,7 +28,14 @@ from gi.repository import Gtk as gtk
 
 
 class MenuItemQuit(gtk.MenuItem):
+    """Extends the gtk.MenuItem class with our own implementation. This menu item just quits the application."""
     def __init__(self, name, visible=True):
+        """
+        Create an instance of MenuItemQuit to be set in the indicator.
+
+        :param name: The name of this menu item.
+        :param visible: Set it visible or not on instantiation
+        """
         gtk.MenuItem.__init__(self, name)
 
         self.connect("activate", self.quit)
@@ -38,6 +45,11 @@ class MenuItemQuit(gtk.MenuItem):
 
     @staticmethod
     def quit(item):
-        """Quits the application. Usually called when the user chooses the menu item option."""
+        """
+        Quits the application. Usually called when the user chooses the menu item option.
+
+        :param item: This should be an instance of the object where this was triggered from (MenuItemQuit)
+        :return: None
+        """
         logging.debug("Executing action for " + item.get_label())
         gtk.main_quit()

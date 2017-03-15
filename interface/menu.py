@@ -29,7 +29,12 @@ from gi.repository import Gtk as gtk
 
 
 class Menu(gtk.Menu):
+    """Extends the gtk.Menu class with our own implementation just to separate things in our app."""
     def __init__(self, menu_items):
+        """
+        Creates a menu instance with a bunch of menu items.
+        :param menu_items: A list of interface.menu_item objects that will compose the menu of the indicator
+        """
         super().__init__()
 
         if len(menu_items) == 0:
