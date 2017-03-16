@@ -28,7 +28,7 @@ from gi.repository import AppIndicator3 as appindicator
 
 
 class Indicator():
-    def __init__(self, name, icon_path, menu):
+    def __init__(self, name, icon_path, menu=None):
         """
         Creates a new indicator for the application! The best indicator Jerry. The best.
 
@@ -42,7 +42,9 @@ class Indicator():
 
         self.indicator = appindicator.Indicator.new(self.name, self.icon, self.category)
         self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
-        self.indicator.set_menu(menu)
+
+        if menu is not None:
+            self.indicator.set_menu(menu)
 
     def set_label(self, value):
         """
@@ -52,3 +54,10 @@ class Indicator():
         :return: None
         """
         self.indicator.set_label(value, '')
+
+    def get_label(self):
+        """
+        Obtain the label currently assigned to this indicator instance
+        :return: A string containing the current indicator label
+        """
+        return self.indicator.get_label()
