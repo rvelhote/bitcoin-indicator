@@ -26,20 +26,17 @@ from exchange import Bitstamp
 class BitstampTest(unittest.TestCase):
     def test_valid_request(self):
         """Test that everything goes according to the plan"""
-        exchange = Bitstamp("eur")
-        result = exchange.query()
+        result = Bitstamp("eur").query()
 
         self.assertIsNotNone(result)
         self.assertIn("last", result)
 
     def test_invalid_api_url(self):
         """Test with an invalid URL (e.g. the domain does not exist)"""
-        exchange = Bitstamp("inv")
-        result = exchange.query()
+        result = Bitstamp("inv").query()
         self.assertIsNone(result)
 
     def test_http_status_error(self):
         """Test with an URL that does not exist and the server replies with a status code"""
-        exchange = Bitstamp("404")
-        result = exchange.query()
+        result = Bitstamp("404").query()
         self.assertIsNone(result)
