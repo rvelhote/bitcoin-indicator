@@ -40,7 +40,6 @@ class Indicator():
         self.icon = os.path.abspath(icon_path)
         self.category = appindicator.IndicatorCategory.SYSTEM_SERVICES
 
-        # TODO Extend the Indicator class?
         self.indicator = appindicator.Indicator.new(self.name, self.icon, self.category)
         self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
         self.indicator.set_menu(menu)
