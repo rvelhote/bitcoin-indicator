@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import gi
+import os
 import signal
 import exchange
 import interface
@@ -29,7 +30,9 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
 
 if __name__ == "__main__":
-    menu = interface.Menu([interface.MenuItemQuit("Quit")])
+    autostart = interface.MenuItemAutostart.is_autostart_set()
+
+    menu = interface.Menu([interface.MenuItemAutostart("Autostart", autostart), interface.MenuItemQuit("Quit")])
     indicator = interface.Indicator("Bitcoin Indicator", "bitcoin.png", menu)
 
     exchange = exchange.Bitstamp("eur")

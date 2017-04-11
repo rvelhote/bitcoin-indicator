@@ -19,12 +19,15 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import os
 import gi
 import logging
 
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import Gtk as gtk
+from xdg import BaseDirectory as base
+from xdg import DesktopEntry as desktop
 
 
 class MenuItemQuit(gtk.MenuItem):
@@ -53,3 +56,66 @@ class MenuItemQuit(gtk.MenuItem):
         """
         logging.debug("Executing action for " + item.get_label())
         gtk.main_quit()
+
+
+class MenuItemAutostart(gtk.CheckMenuItem):
+    """Handles the autostart checkbox option that is a part of the menu"""
+    def __init__(self, name, checked=True, visible=True):
+        """
+        Create an instance of MenuItemAutostart to be set in the indicator. It will allow the user to start the
+        indicator on system startup.
+        :param name: The name of this menu item.
+        :param visible: Set it visible or not on instantiation
+        """
+        gtk.CheckMenuItem.__init__(self, name)
+        self.set_active(checked)
+
+        if visible:
+            self.show()
+
+        self.connect("toggled", self.set_autostart)
+
+    @staticmethod
+    def get_xdg_file():
+        """
+        Obtain the desktop entry file with the configuration about this indicator
+        :return:
+        """
+        autostart_dir = base.save_config_path("autostart")
+        autostart_file = os.path.join(autostart_dir, "bitcoin-indicator.desktop")
+
+        if not os.path.exists(autostart_file):
+            return None, autostart_file
+
+        return desktop.DesktopEntry(autostart_file), autostart_file
+
+    @staticmethod
+    def set_autostart(item, data=None):
+        """
+
+        :param item:
+        :param data:
+        :return:
+        """
+        dfile, path = MenuItemAutostart.get_xdg_file()
+
+        if dfile is None:
+            return
+
+        dfile.set("X-GNOME-Autostart-enabled", item.get_active())
+        dfile.write(filename=path)
+
+    @staticmethod
+    def is_autostart_set():
+        """
+        Checks if the autostart menu item option should be checked or not
+        :return:
+        """
+        startup = False
+        dfile, path = MenuItemAutostart.get_xdg_file()
+
+        if dfile is not None:
+            if dfile.get("X-GNOME-Autostart-enabled").upper() == "TRUE":
+                startup = True
+
+        return startup
