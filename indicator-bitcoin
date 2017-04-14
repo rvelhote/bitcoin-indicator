@@ -20,6 +20,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import os
 import gi
 import signal
 import exchange
@@ -31,9 +32,10 @@ from gi.repository import Gtk as gtk
 
 if __name__ == "__main__":
     autostart = interface.MenuItemAutostart.is_autostart_set()
+    iconpath = os.path.abspath(os.path.dirname(__file__)) + '/bitcoin.png'
 
     menu = interface.Menu([interface.MenuItemAutostart("Autostart", autostart), interface.MenuItemQuit("Quit")])
-    indicator = interface.Indicator("Bitcoin Indicator", "bitcoin.png", menu)
+    indicator = interface.Indicator("Bitcoin Indicator", iconpath, menu)
 
     exchange = exchange.Bitstamp("eur")
     interface.QueryLoop(indicator, exchange).start()
