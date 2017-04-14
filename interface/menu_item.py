@@ -82,7 +82,7 @@ class MenuItemAutostart(gtk.CheckMenuItem):
         :return:
         """
         autostart_dir = base.save_config_path("autostart")
-        autostart_file = os.path.join(autostart_dir, "bitcoin-indicator.desktop")
+        autostart_file = os.path.join(autostart_dir, "indicator-bitcoin.desktop")
 
         if not os.path.exists(autostart_file):
             return None, autostart_file
