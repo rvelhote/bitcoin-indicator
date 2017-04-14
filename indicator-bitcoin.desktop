@@ -2,7 +2,7 @@
 Categories=System
 Comment=A Bitcoin price indicator for Ubuntu based on most up-to-date price on Bitstamp
 Exec=/usr/share/indicator-bitcoin/indicator-bitcoin
-Hidden=False
+Hidden=false
 Icon=/usr/share/indicator-bitcoin/bitcoin.png
 Name=Bitcoin indicator
 StartupNotify=false

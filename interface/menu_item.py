@@ -96,11 +96,10 @@ class MenuItemAutostart(gtk.CheckMenuItem):
         return desktop.DesktopEntry(autostart_file), autostart_file
 
     @staticmethod
-    def set_autostart(item, data=None):
+    def set_autostart(item):
         """
-
-        :param item:
-        :param data:
+        Toggle event for the autostart option that belongs to the indicator menu
+        :param item: The item that was toggled
         :return:
         """
         dfile, path = MenuItemAutostart.get_xdg_file()
@@ -108,7 +107,11 @@ class MenuItemAutostart(gtk.CheckMenuItem):
         if dfile is None:
             return
 
-        dfile.set("X-GNOME-Autostart-enabled", item.get_active())
+        value = "false"
+        if item.get_active():
+            value = "true"
+
+        dfile.set("X-GNOME-Autostart-enabled", value)
         dfile.write(filename=path)
 
     @staticmethod
