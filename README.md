@@ -6,8 +6,13 @@ This is a very simple indicator so you can always know the price of a Bitcoin in
 
 ![Screenshot](http://i.imgur.com/q638xP2.png)
 
+# Build
+Just run `bash makedeb` to generate the `deb` package. You will have to install the `cmake` package and its dependencies in case you don't have any build tools available. If you don't want to install this indicator in your system you may just as well clone this repository or download it as a zip file and just run `python3 indicator-bitcoin` or `./indicator-bitcoin`.
+
+# Installing
+Assuming you generated the `.deb` or obtained it from the releases section of Github, you can now install it with the following command: `sudo dpkg -i indicator-bitcoin-1.0.0-noarch.deb` (the version number might differ).
+
 ## Planned Features
 - A up or down signal to tell if the price is going up or down
 - Implement some more exchanges
 - Configuration screen with some options (e.g. refresh rate, currency)
-- Set the indicator to run at startup or not (although it can be done manually)
