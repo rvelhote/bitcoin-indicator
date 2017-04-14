@@ -1,9 +1,11 @@
 [Desktop Entry]
-Name=Bitcoin Indicator
-Version=1.0
-Type=Application
-Hidden=false
-StartupNotify=true
+Categories=System
+Comment=A Bitcoin price indicator for Ubuntu based on most up-to-date price on Bitstamp
+Exec=/usr/share/indicator-bitcoin/bitcoin
+Hidden=False
+Icon=/usr/share/indicator-bitcoin/bitcoin.png
+Name=Bitcoin indicator
+StartupNotify=false
 Terminal=false
+Type=Application
 X-GNOME-Autostart-enabled=true
-Comment=A Bitcoin price indicator for Ubuntu based on most up-to-date price on BitStamp
