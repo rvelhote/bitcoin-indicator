@@ -32,15 +32,17 @@ class QueryLoop():
     """QueryLoop accepts the indicator to which the result will be written and an exchange to obtain the results from.
     To define an exchange you only need to implement the query method and return the results in a pre-determined
     format so that it will be consistent."""
-    def __init__(self, indicator, exchange):
+    def __init__(self, indicator, exchange, timeout=5000):
         """
         Initialize the query loop with the indicator and the exchange to get the data from.
 
         :param indicator: An instance of an indicator
         :param exchange: An instance of an exchange to get the information from
+        :param timeout The interval between requests to the exchange API
         """
         self.indicator = indicator
         self.exchange = exchange
+        self.timeout = timeout
         self.last_known = {"last": "0.00"}
 
     def loop(self):
@@ -59,5 +61,5 @@ class QueryLoop():
     def start(self):
         """Starts the query loop it does not do anything else. It's merely a matter of naming because
         when initializing the loop in the main() point of entry."""
-        GObject.timeout_add(5000, self.loop)
+        GObject.timeout_add(self.timeout, self.loop)
         self.loop()
