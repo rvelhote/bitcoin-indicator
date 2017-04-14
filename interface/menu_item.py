@@ -28,6 +28,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
 from xdg import BaseDirectory as base
 from xdg import DesktopEntry as desktop
+from shutil import copyfile
 
 
 class MenuItemQuit(gtk.MenuItem):
@@ -85,8 +86,12 @@ class MenuItemAutostart(gtk.CheckMenuItem):
         autostart_file = os.path.join(autostart_dir, "indicator-bitcoin.desktop")
 
         if not os.path.exists(autostart_file):
-            desktop_files = list(base.load_data_paths("applications", "indicator-bitcoin.desktop"))
-            return desktop.DesktopEntry(desktop_files[0]), desktop_files[0]
+            desktop_file = list(base.load_data_paths("applications", "indicator-bitcoin.desktop"))[0]
+
+            if not os.path.exists(desktop_file):
+                return None, desktop_file
+
+            copyfile(desktop_file, autostart_file)
 
         return desktop.DesktopEntry(autostart_file), autostart_file
 
