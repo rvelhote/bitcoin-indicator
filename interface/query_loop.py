@@ -25,7 +25,7 @@ import logging
 gi.require_version('Gtk', '3.0')
 logging.basicConfig(level=logging.WARNING)
 
-from gi.repository import GLib as glib
+from gi.repository import GObject
 
 
 class QueryLoop():
@@ -54,9 +54,10 @@ class QueryLoop():
         else:
             self.indicator.set_label("Last Known: {} EUR (Error)".format(self.last_known["last"]))
 
-        glib.timeout_add_seconds(5, self.loop)
+        return True
 
     def start(self):
         """Starts the query loop it does not do anything else. It's merely a matter of naming because
         when initializing the loop in the main() point of entry."""
+        GObject.timeout_add(5000, self.loop)
         self.loop()
