@@ -1,7 +1,7 @@
 [Desktop Entry]
 Categories=System
 Comment=A Bitcoin price indicator for Ubuntu based on most up-to-date price on Bitstamp
-Exec=/usr/share/indicator-bitcoin/bitcoin
+Exec=/usr/share/indicator-bitcoin/indicator-bitcoin
 Hidden=False
 Icon=/usr/share/indicator-bitcoin/bitcoin.png
 Name=Bitcoin indicator
