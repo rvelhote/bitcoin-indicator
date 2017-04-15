@@ -14,5 +14,6 @@ Assuming you generated the `.deb` or obtained it from the releases section of Gi
 
 ## Planned Features
 - A up or down signal to tell if the price is going up or down
-- Implement some more exchanges
+- Implement Ripple (XRP) and perhaps other currencies
 - Configuration screen with some options (e.g. refresh rate, currency)
+- Refactor exchanges into currencies and the indicator's name to indicator-cryptocurrency instead of being specific to Bitcoin
