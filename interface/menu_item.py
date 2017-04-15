@@ -86,12 +86,12 @@ class MenuItemAutostart(gtk.CheckMenuItem):
         autostart_file = os.path.join(autostart_dir, "indicator-bitcoin.desktop")
 
         if not os.path.exists(autostart_file):
-            desktop_file = list(base.load_data_paths("applications", "indicator-bitcoin.desktop"))[0]
+            desktop_files = list(base.load_data_paths("applications", "indicator-bitcoin.desktop"))
 
-            if not os.path.exists(desktop_file):
-                return None, desktop_file
+            if len(desktop_files) == 0 or not os.path.exists(desktop_files[0]):
+                return None, None
 
-            copyfile(desktop_file, autostart_file)
+            copyfile(desktop_files[0], autostart_file)
 
         return desktop.DesktopEntry(autostart_file), autostart_file
 
