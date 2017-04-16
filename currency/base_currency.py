@@ -19,6 +19,22 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-from currency.base_currency import BaseCurrency
-from currency.bitcoin import Bitcoin
-from currency.ripple import Ripple
+
+
+class BaseCurrency():
+    def __init__(self, currency):
+        """
+        Initialize the currency with the currency that we want to display the value in.
+        :param currency: The currency that we want to display the value of the coin in.
+        """
+        self.currency = currency.strip().lower()
+
+    def get_ticker(self):
+        """
+        Obtain the destination currency ticker to display next to the price
+        :return: The currency ticker (e.g. EUR, USD, BTC)
+        """
+        return self.currency.strip().upper()
+
+    def query(self):
+        raise Exception("Your currency should implement the query method that accesses an API")
