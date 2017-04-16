@@ -23,7 +23,7 @@
 import os
 import gi
 import signal
-import exchange
+import currency
 import interface
 
 gi.require_version('Gtk', '3.0')
@@ -37,8 +37,8 @@ if __name__ == "__main__":
     menu = interface.Menu([interface.MenuItemAutostart("Autostart", autostart), interface.MenuItemQuit("Quit")])
     indicator = interface.Indicator("Bitcoin Indicator", iconpath, menu)
 
-    exchange = exchange.Bitstamp("eur")
-    interface.QueryLoop(indicator, exchange).start()
+    btc = currency.Bitcoin("eur")
+    interface.QueryLoop(indicator, btc).start()
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     gtk.main()

@@ -28,7 +28,7 @@ SET( CPACK_GENERATOR                   "DEB")
 INCLUDE( CPack )
 
 INSTALL( PROGRAMS  indicator-bitcoin                 DESTINATION /usr/share/indicator-bitcoin)
-INSTALL( DIRECTORY exchange                          DESTINATION /usr/share/indicator-bitcoin)
+INSTALL( DIRECTORY currency                          DESTINATION /usr/share/indicator-bitcoin)
 INSTALL( DIRECTORY interface                         DESTINATION /usr/share/indicator-bitcoin)
 INSTALL( FILES     bitcoin.png                       DESTINATION /usr/share/indicator-bitcoin)
 INSTALL( FILES     indicator-bitcoin.desktop         DESTINATION /usr/share/applications/)

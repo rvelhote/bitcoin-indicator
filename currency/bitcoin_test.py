@@ -19,37 +19,24 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import requests
-import logging
-
-logging.basicConfig(level=logging.WARNING)
+import unittest
+from currency import Bitcoin
 
 
-class Bitstamp():
-    """Bitstamp implements the Bitstamp v2 API"""
-    url = {
-        "btceur": "https://www.bitstamp.net/api/v2/ticker/btceur",
-        "btcinv": "https://invalid-address.bitstamp.net/api/v2/ticker/btceur",
-        "btc404": "https://www.bitstamp.net/api/v2/ticker/btceur-404"
-    }
+class BitcoinTest(unittest.TestCase):
+    def test_valid_request(self):
+        """Test that everything goes according to the plan"""
+        result = Bitcoin("eur").query()
 
-    def __init__(self, currency):
-        """Initialize the exchange with the currency that we want to use"""
-        self.currency = currency.strip().lower()
+        self.assertIsNotNone(result)
+        self.assertIn("last", result)
 
-    def query(self):
-        """Perform a query to the API defined by the Exchange. The result will be a JSON object with all the data."""
-        result = None
+    def test_invalid_api_url(self):
+        """Test with an invalid URL (e.g. the domain does not exist)"""
+        result = Bitcoin("inv").query()
+        self.assertIsNone(result)
 
-        try:
-            response = requests.request("GET", self.url["btc" + self.currency])
-
-            if response.status_code != 200:
-                raise Exception("Request failed with a {} status code".format(response.status_code))
-
-            result = response.json()
-        except Exception as e:
-            logging.warning(e)
-
-        logging.debug(result)
-        return result
+    def test_http_status_error(self):
+        """Test with an URL that does not exist and the server replies with a status code"""
+        result = Bitcoin("404").query()
+        self.assertIsNone(result)

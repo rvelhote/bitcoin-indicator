@@ -21,7 +21,7 @@
 # SOFTWARE.
 import os
 import unittest
-import exchange
+import currency
 import interface
 
 
@@ -37,16 +37,16 @@ class QueryLoopTest(unittest.TestCase):
     def test_valid_request(self):
         """Make sure that the indicator label is presenting the correct message to the user when all is good"""
         indicator = make_indicator(self)
-        xchange = exchange.Bitstamp("eur")
+        curr = currency.Bitcoin("eur")
 
-        interface.QueryLoop(indicator, xchange).start()
+        interface.QueryLoop(indicator, curr).start()
 
         self.assertNotIn("Error", indicator.get_label())
 
     def test_invalid_request(self):
         """Make sure that the indicator displays an error message when there is an error"""
         indicator = make_indicator(self)
-        xchange = exchange.Bitstamp("inv")
+        curr = currency.Bitcoin("inv")
 
-        interface.QueryLoop(indicator, xchange).start()
+        interface.QueryLoop(indicator, curr).start()
         self.assertIn("Error", indicator.get_label())
