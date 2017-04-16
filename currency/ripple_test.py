@@ -19,5 +19,24 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-from currency.bitcoin import Bitcoin
-from currency.ripple import Ripple
+import unittest
+from currency import Ripple
+
+
+class RippleTest(unittest.TestCase):
+    def test_valid_request(self):
+        """Test that everything goes according to the plan"""
+        result = Ripple("eur").query()
+
+        self.assertIsNotNone(result)
+        self.assertIn("last", result)
+
+    def test_invalid_api_url(self):
+        """Test with an invalid URL (e.g. the domain does not exist)"""
+        result = Ripple("inv").query()
+        self.assertIsNone(result)
+
+    def test_http_status_error(self):
+        """Test with an URL that does not exist and the server replies with a status code"""
+        result = Ripple("404").query()
+        self.assertIsNone(result)
