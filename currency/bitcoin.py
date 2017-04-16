@@ -28,14 +28,25 @@ logging.basicConfig(level=logging.WARNING)
 class Bitcoin():
     """Bitstamp implements the Bitstamp v2 API"""
     url = {
+        "btcusd": "https://www.bitstamp.net/api/v2/ticker/btcusd",
         "btceur": "https://www.bitstamp.net/api/v2/ticker/btceur",
         "btcinv": "https://invalid-address.bitstamp.net/api/v2/ticker/btceur",
         "btc404": "https://www.bitstamp.net/api/v2/ticker/btceur-404"
     }
 
     def __init__(self, currency):
-        """Initialize the currency with the currency that we want to use"""
+        """
+        Initialize the currency with the currency that we want to use
+        :param currency: dd
+        """
         self.currency = currency.strip().lower()
+
+    def get_ticker(self):
+        """
+        Obtain the destination currency ticker to display next to the price
+        :return: The currency ticker (e.g. EUR, USD, BTC)
+        """
+        return self.currency.strip().upper()
 
     def query(self):
         """Perform a query to the API defined by the Exchange. The result will be a JSON object with all the data."""
