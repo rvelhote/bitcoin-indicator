@@ -17,3 +17,6 @@ Assuming you generated the `.deb` or obtained it from the releases section of Gi
 - Implement Ripple (XRP) and perhaps other currencies
 - Configuration screen with some options (e.g. refresh rate, currency)
 - Refactor exchanges into currencies and the indicator's name to indicator-cryptocurrency instead of being specific to Bitcoin
+
+## Icons
+The super cool SVG icons used in this indicator are from artist Martin Allien and you can find them in his (Github project page)[https://github.com/allienworks/cryptocoins]. I made only a slight modification to the colors so they can match the Ambience theme.

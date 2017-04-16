@@ -32,12 +32,12 @@ from gi.repository import Gtk as gtk
 
 if __name__ == "__main__":
     autostart = interface.MenuItemAutostart.is_autostart_set()
-    iconpath = os.path.abspath(os.path.dirname(__file__)) + '/bitcoin.png'
+    iconpath = os.path.abspath(os.path.dirname(__file__)) + '/icons/bitcoin.svg'
 
     menu = interface.Menu([interface.MenuItemAutostart("Autostart", autostart), interface.MenuItemQuit("Quit")])
     indicator = interface.Indicator("Bitcoin Indicator", iconpath, menu)
 
-    btc = currency.Bitcoin("eur")
+    btc = currency.Bitcoin("usd")
     interface.QueryLoop(indicator, btc).start()
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)
