@@ -59,6 +59,20 @@ class MenuItemQuit(gtk.MenuItem):
         gtk.main_quit()
 
 
+class MenuItemLastUpdated(gtk.MenuItem):
+    """Extends the gtk.MenuItem class with our own implementation. This menu item contains a greyed-out datetime 
+    that represents the last time the price was updated."""
+    def __init__(self, initial_date):
+        """
+        Create an instance of MenuItemLastUpdated.
+        :param initial_date: The initial date to set in the menuitem
+        """
+        gtk.MenuItem.__init__(self, initial_date)
+
+        self.show()
+        self.set_sensitive(False)
+
+
 class MenuItemAutostart(gtk.CheckMenuItem):
     """Handles the autostart checkbox option that is a part of the menu"""
     def __init__(self, name, checked=True, visible=True):

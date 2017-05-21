@@ -21,6 +21,7 @@
 # SOFTWARE.
 import gi
 import os
+import time
 
 gi.require_version('AppIndicator3', '0.1')
 
@@ -54,6 +55,7 @@ class Indicator():
         :return: None
         """
         self.indicator.set_label(value, '')
+        self.indicator.get_menu().get_children()[0].get_child().set_text(time.strftime('%Y-%m-%d %H:%M:%S'))
 
     def get_label(self):
         """

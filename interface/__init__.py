@@ -23,4 +23,5 @@ from interface.indicator import Indicator
 from interface.menu import Menu
 from interface.menu_item import MenuItemQuit
 from interface.menu_item import MenuItemAutostart
+from interface.menu_item import MenuItemLastUpdated
 from interface.query_loop import QueryLoop
