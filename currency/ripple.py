@@ -23,7 +23,7 @@ import requests
 import logging
 import currency
 
-logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger('indicator_bitcoin.ripple')
 
 
 class Ripple(currency.BaseCurrency):

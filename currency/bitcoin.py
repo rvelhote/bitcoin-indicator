@@ -23,7 +23,7 @@ import requests
 import logging
 import currency
 
-logging.basicConfig(level=logging.WARNING)
+logger = logging.getLogger('indicator_bitcoin.bitcoin')
 
 
 class Bitcoin(currency.BaseCurrency):
@@ -47,7 +47,7 @@ class Bitcoin(currency.BaseCurrency):
 
             result = response.json()
         except Exception as e:
-            logging.warning(e)
+            logger.warning(e)
 
-        logging.debug(result)
+        logger.debug(result)
         return result

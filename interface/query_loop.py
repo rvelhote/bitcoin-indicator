@@ -20,11 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import gi
-import logging
 
 gi.require_version('Gtk', '3.0')
-logging.basicConfig(level=logging.WARNING)
-
 from gi.repository import GObject
 
 

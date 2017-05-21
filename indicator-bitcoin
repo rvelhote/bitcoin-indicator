@@ -25,10 +25,26 @@ import gi
 import signal
 import currency
 import interface
+import logging
 
 gi.require_version('Gtk', '3.0')
-
 from gi.repository import Gtk as gtk
+
+logger = logging.getLogger('indicator_bitcoin')
+logger.setLevel(logging.DEBUG)
+
+fh = logging.FileHandler('indicator.log')
+fh.setLevel(logging.DEBUG)
+
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+
+formatter = logging.Formatter('%(levelname)s:%(asctime)s:%(name)s:%(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+
+logger.addHandler(ch)
+logger.addHandler(fh)
 
 if __name__ == "__main__":
     autostart = interface.MenuItemAutostart.is_autostart_set()
