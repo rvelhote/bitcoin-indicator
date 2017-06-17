@@ -40,7 +40,7 @@ class Bitcoin(currency.BaseCurrency):
         result = None
 
         try:
-            response = requests.request("GET", self.url["btc" + self.currency])
+            response = requests.get(self.url["btc" + self.currency], timeout=2)
 
             if response.status_code != 200:
                 raise Exception("Request failed with a {} status code".format(response.status_code))

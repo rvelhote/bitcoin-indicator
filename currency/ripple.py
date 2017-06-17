@@ -41,7 +41,7 @@ class Ripple(currency.BaseCurrency):
         result = None
 
         try:
-            response = requests.request("GET", self.url["xrp" + self.currency])
+            response = requests.get(self.url["xrp" + self.currency], timeout=2)
 
             if response.status_code != 200:
                 raise Exception("Request failed with a {} status code".format(response.status_code))
