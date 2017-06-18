@@ -24,7 +24,7 @@ import time
 import os
 import gi
 import signal
-import currency
+import cryptocurrency
 import interface
 import logging
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     ])
     indicator = interface.Indicator("Bitcoin Indicator", iconpath, menu)
 
-    btc = currency.Bitcoin("eur")
+    btc = cryptocurrency.CryptoCurrency("bitcoin", "eur")
     interface.QueryLoop(indicator, btc).start()
 
     signal.signal(signal.SIGINT, signal.SIG_DFL)

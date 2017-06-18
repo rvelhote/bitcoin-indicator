@@ -2,7 +2,7 @@ language: python
 python:
   - "3.5"
   - "3.6"
-script: python -m unittest currency/*_test*
+script: python -m unittest cryptocurrency/*_test*
 addons:
   code_climate:
     repo_token: 4acc82347c0826abd052cff6ccd8d2f671bec563e6c42ac2c97f74f75fd96dcd

@@ -26,16 +26,16 @@ from gi.repository import GObject
 
 
 class QueryLoop():
-    """QueryLoop accepts the indicator to which the result will be written and an currency to obtain the results from.
-    To define an currency you only need to implement the query method and return the results in a pre-determined
+    """QueryLoop accepts the indicator to which the result will be written and an cryptocurrency to obtain the results from.
+    To define an cryptocurrency you only need to implement the query method and return the results in a pre-determined
     format so that it will be consistent."""
-    def __init__(self, indicator, currency, timeout=5000):
+    def __init__(self, indicator, currency, timeout=300):
         """
-        Initialize the query loop with the indicator and the currency to get the data from.
+        Initialize the query loop with the indicator and the cryptocurrency to get the data from.
 
-        :param indicator: An instance of an indicator
-        :param currency: An instance of an currency to get the information from
-        :param timeout The interval between requests to the currency API
+        :param indicator: An instance of an indicator.
+        :param currency: An instance of an cryptocurrency to get the information from.
+        :param timeout The interval between requests to the cryptocurrency API. Value is in SECONDS.
         """
         self.indicator = indicator
         self.currency = currency
@@ -43,7 +43,7 @@ class QueryLoop():
         self.last_known = {"last": "0.00"}
 
     def loop(self):
-        """Loop calls it-self forever and ever and will consult the currency for the most current value and update
+        """Loop calls it-self forever and ever and will consult the cryptocurrency for the most current value and update
         the indicator's label content."""
         result = self.currency.query()
 
@@ -58,5 +58,5 @@ class QueryLoop():
     def start(self):
         """Starts the query loop it does not do anything else. It's merely a matter of naming because
         when initializing the loop in the main() point of entry."""
-        GObject.timeout_add(self.timeout, self.loop)
+        GObject.timeout_add_seconds(self.timeout, self.loop)
         self.loop()

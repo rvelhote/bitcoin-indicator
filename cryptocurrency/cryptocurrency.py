@@ -21,33 +21,49 @@
 # SOFTWARE.
 import requests
 import logging
-import currency
 
-logger = logging.getLogger('indicator_bitcoin.bitcoin')
+logger = logging.getLogger('indicator_bitcoin.cryptocurrency')
 
 
-class Bitcoin(currency.BaseCurrency):
-    """Bitstamp implements the Bitstamp v2 API"""
-    url = {
-        "btcusd": "https://www.bitstamp.net/api/v2/ticker/btcusd",
-        "btceur": "https://www.bitstamp.net/api/v2/ticker/btceur",
-        "btcinv": "https://invalid-address.bitstamp.net/api/v2/ticker/btceur",
-        "btc404": "https://www.bitstamp.net/api/v2/ticker/btceur-404"
-    }
+class CryptoCurrency():
+    """CryptoCurrency implements the coinmarketcap.com REST API for a specific cryptocurrency"""
+    url = "https://api.coinmarketcap.com/v1/ticker/{}?convert={}"
+
+    def __init__(self, crypto, currency="USD"):
+        """
+        Initialize the crypto cryptocurrency that we want to track.
+        :param crypto: The crypto cryptocurrency ticker that we want to display
+        :param fiat The fiat cryptocurrency that we want to convert the value of the crypto to
+        :
+        """
+        self.crypto = crypto.strip().lower()
+        self.currency = currency.strip().lower()
+
+    def get_ticker(self):
+        """
+        Obtain the destination cryptocurrency ticker to display next to the price
+        :return: The cryptocurrency ticker (e.g. EUR, USD, BTC)
+        """
+        return self.currency.strip().upper()
 
     def query(self):
         """Perform a query to the API defined by the Exchange. The result will be a JSON object with all the data."""
         result = None
+        json_response = None
 
         try:
-            response = requests.get(self.url["btc" + self.currency], timeout=2)
+            response = requests.get(self.url.format(self.crypto, self.currency), timeout=5)
 
             if response.status_code != 200:
                 raise Exception("Request failed with a {} status code".format(response.status_code))
 
-            result = response.json()
+            json_response = response.json()
+            result = {
+                "last": json_response[0]["price_" + self.currency]
+            }
+
         except Exception as e:
             logger.warning(e)
 
-        logger.debug(result)
+        logger.debug(json_response)
         return result
