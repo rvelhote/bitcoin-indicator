@@ -1,7 +1,7 @@
 PROJECT( indicator-bitcoin C )
 CMAKE_MINIMUM_REQUIRED( VERSION 3.5 )
 
-SET( APP_VER_MAJOR 1 )
+SET( APP_VER_MAJOR 2 )
 SET( APP_VER_MINOR 0 )
 SET( APP_VER_PATCH 0 )
 SET( APP_VERSION ${APP_VER_MAJOR}.${APP_VER_MINOR}.${APP_VER_PATCH} )
@@ -28,7 +28,7 @@ SET( CPACK_GENERATOR                   "DEB")
 INCLUDE( CPack )
 
 INSTALL( PROGRAMS  indicator-bitcoin                DESTINATION /usr/share/indicator-bitcoin)
-INSTALL( DIRECTORY currency                         DESTINATION /usr/share/indicator-bitcoin)
+INSTALL( DIRECTORY cryptocurrency                   DESTINATION /usr/share/indicator-bitcoin)
 INSTALL( DIRECTORY interface                        DESTINATION /usr/share/indicator-bitcoin)
 INSTALL( DIRECTORY icons                            DESTINATION /usr/share/indicator-bitcoin)
 INSTALL( FILES     indicator-bitcoin.desktop        DESTINATION /usr/share/applications/)
